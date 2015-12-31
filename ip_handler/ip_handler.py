@@ -2,7 +2,7 @@ import urllib, re, gnupg, smtplib, datetime
 from email.mime.text import MIMEText
 
 # Gnupg Home
-gpg = gnupg.GPG(gpgbinary='gpg2', gnupghome='~/.gnupg')
+gpg = gnupg.GPG(gpgbinary='gpg2', gnupghome='/home/pi/.gnupg')
 
 # Get current time/date
 time = str(datetime.datetime.now())
@@ -19,15 +19,15 @@ url = "http://checkip.dyndns.org"
 m = re.search('[0-9.]+', urllib.urlopen(url).read())
 curr_ip = m.group()
 
-with open('stored_ip', 'r+') as f: # Open file storing current ip
+with open('/home/pi/ip_handler/stored_ip', 'r+') as f: # Open file storing current ip
 #    f.seek(1, 0)
     f.readline()
     l = f.readline() # Read the second line
 #    print l
     if l == curr_ip: # Compares line 2 (old IP) and the new IP
-        print "Match, exiting" # Exits if the IP matches
+#        print "Match, exiting" # Exits if the IP matches
         exit()
-    print "Writing new IP to file"
+#    print "Writing new IP to file"
     f.seek(0)
     f.write(time+"\n")
     f.write(curr_ip) # Writes the new IP to the file
