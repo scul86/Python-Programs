@@ -9,7 +9,7 @@ time = str(datetime.datetime.now())
 #print time
 
 # Your own accounts' information.
-to = 'xxxxx@comcast.net' # Email to send to.
+to = 'xxxxx@comcast.net' # Email to send to. Assumes a matching PGP public key in your keyring.
 gmail_user = 'xxxxx@gmail.com' # Email to send from. (MUST BE GMAIL)
 gmail_password = 'xxxxx' # Gmail password.
 smtpserver = smtplib.SMTP('smtp.gmail.com', 587) # Server to use.
@@ -36,8 +36,8 @@ with open('/home/pi/ip_handler/stored_ip', 'r+') as f: # Open file storing curre
 to_encrypt = "Your current IP is: " + curr_ip+".\n\n-Raspberry Pi"
 
 # Sign and Encrypt the message
-sign_by = "xxxxx"
-sign_password = "xxxxx"
+sign_by = "xxxxx" #Fingerprint of the signature key
+sign_password = "xxxxx" #Password of the signature key
 encrypted_data = gpg.encrypt(to_encrypt, to, sign=sign_by, passphrase=sign_password)
 encrypted_string = str(encrypted_data)
 
