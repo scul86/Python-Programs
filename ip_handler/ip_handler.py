@@ -20,17 +20,16 @@ m = re.search('[0-9.]+', urllib.urlopen(url).read())
 curr_ip = m.group()
 
 with open('/home/pi/ip_handler/stored_ip', 'r+') as f: # Open file storing current ip
-#    f.seek(1, 0)
-    f.readline()
-    l = f.readline() # Read the second line
-#    print l
-    if l == curr_ip: # Compares line 2 (old IP) and the new IP
+    l = f.readlines() # Read the lines
+    l = l[-2].split()
+#    print "Old: " + l[0]
+#    print "New: " + curr_ip
+    if l[0] == curr_ip: # Compares line 2 (old IP) and the new IP
 #        print "Match, exiting" # Exits if the IP matches
         exit()
 #    print "Writing new IP to file"
-    f.seek(0)
-    f.write(time+"\n")
-    f.write(curr_ip) # Writes the new IP to the file
+    f.write("\n" + time + "\n")
+    f.write(curr_ip+"\n ") # Writes the new IP to the file
 
 # Create a message with the new IP included
 to_encrypt = "Your current IP is: " + curr_ip+".\n\n-Raspberry Pi"
